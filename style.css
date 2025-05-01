@@ -1,0 +1,13 @@
+body {
+  background-color: #0f0f0f;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 2em;
+}
+a {
+  color: #ff6600;
+  text-decoration: none;
+  display: block;
+  margin-top: 1em;
+}

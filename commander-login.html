@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Commander Login</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 5em;
+    }
+    input, button {
+      padding: 0.5em;
+      font-size: 1em;
+      margin: 1em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Commander Portal Access</h1>
+  <p>Enter the flame code to proceed.</p>
+  <input type="password" id="password" placeholder="Enter Flame Code">
+  <button onclick="checkPassword()">Enter</button>
+  <p id="message"></p>
+  <script>
+    function checkPassword() {
+      var password = document.getElementById("password").value;
+      if (password === "scrollfire") {
+        window.location.href = "commander/dashboard.html";
+      } else {
+        document.getElementById("message").innerText = "Invalid code. Try again.";
+      }
+    }
+  </script>
+</body>
+</html>

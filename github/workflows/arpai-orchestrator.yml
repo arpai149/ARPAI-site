@@ -1,0 +1,315 @@
+name: ARPAI Orchestrator (Scaffold → PR)
+
+on:
+  workflow_dispatch:
+    inputs:
+      projectName:
+        description: "Project folder (apps/web)"
+        default: "web"
+        required: true
+
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Generate Turborepo + Next.js, Tailwind, ESLint, Prettier
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          # Root
+          cat > package.json <<'JSON'
+          {
+            "name": "arpai",
+            "private": true,
+            "workspaces": ["apps/*", "packages/*"],
+            "scripts": {
+              "dev": "turbo dev --filter=web",
+              "build": "turbo build",
+              "lint": "turbo lint",
+              "test": "turbo run test"
+            },
+            "devDependencies": {
+              "turbo": "^2.0.6",
+              "typescript": "^5.5.4",
+              "eslint": "^9.7.0",
+              "prettier": "^3.3.3"
+            }
+          }
+          JSON
+
+          cat > turbo.json <<'JSON'
+          {
+            "$schema": "https://turbo.build/schema.json",
+            "pipeline": {
+              "dev": { "cache": false },
+              "build": { "outputs": [".next/**", "dist/**"] },
+              "lint": {},
+              "test": {}
+            }
+          }
+          JSON
+
+          cat > tsconfig.json <<'JSON'
+          {
+            "files": [],
+            "references": [
+              { "path": "apps/web" },
+              { "path": "packages/ui" },
+              { "path": "packages/config" }
+            ],
+            "compilerOptions": {
+              "target": "ES2022",
+              "module": "ESNext",
+              "moduleResolution": "Bundler",
+              "jsx": "react-jsx",
+              "strict": true,
+              "skipLibCheck": true
+            }
+          }
+          JSON
+
+          cat > .gitignore <<'TXT'
+          node_modules
+          .next
+          dist
+          .out
+          .DS_Store
+          .env
+          .env.*
+          .vercel
+          TXT
+
+          cat > .prettierrc.json <<'JSON'
+          { "semi": true, "singleQuote": false, "trailingComma": "all", "printWidth": 100 }
+          JSON
+
+          echo -e "node_modules\n.next\ndist" > .eslintignore
+
+          mkdir -p docs
+          cat > docs/ARPAI-COMMAND-NOTION-TEMPLATE.md <<'MD'
+          # ARPAI Command — Notion Template
+          ## Database properties
+          - Name (title)
+          - Status (Backlog, Build, Review, Live)
+          - Priority (P0, P1, P2)
+          - Owner (person)
+          - GitHub PR (URL)
+          - Links (rich text)
+          ## PR keywords
+          - "refers to" <Notion task URL> → links PR
+          - "closes" <Notion task URL> → auto-complete on merge
+          MD
+
+          # packages/ui
+          mkdir -p packages/ui/src/components
+          cat > packages/ui/package.json <<'JSON'
+          {
+            "name": "@arpai/ui",
+            "version": "0.0.1",
+            "private": true,
+            "main": "src/index.ts",
+            "types": "src/index.ts",
+            "peerDependencies": {
+              "react": ">=18",
+              "react-dom": ">=18"
+            }
+          }
+          JSON
+
+          cat > packages/ui/src/index.ts <<'TS'
+          export { TopNav } from "./components/TopNav";
+          TS
+
+          cat > packages/ui/src/components/TopNav.tsx <<'TSX'
+          import * as React from "react";
+          const links = [
+            { href: "/", label: "Home" },
+            { href: "/dealer-ai", label: "DealerAI" },
+            { href: "/teach-ai", label: "TeachAI" },
+            { href: "/scrollfire", label: "ScrollFire" },
+            { href: "/skillverse", label: "Skillverse" },
+            { href: "/rpay", label: "RPAY" },
+            { href: "/command", label: "Command" }
+          ];
+          export function TopNav() {
+            return (
+              <header className="w-full border-b border-neutral-800 bg-neutral-950/70 backdrop-blur">
+                <nav className="max-w-5xl mx-auto px-4 py-3 flex flex-wrap gap-3 items-center">
+                  <a href="/" className="text-lg font-bold text-amber-400">ARPAI</a>
+                  <ul className="flex flex-wrap gap-4 text-sm">
+                    {links.map((l) => (
+                      <li key={l.href}>
+                        <a className="text-neutral-300 hover:text-white" href={l.href}>
+                          {l.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </header>
+            );
+          }
+          TSX
+
+          # packages/config
+          mkdir -p packages/config/eslint-config
+          cat > packages/config/package.json <<'JSON'
+          { "name": "@arpai/config", "version": "0.0.1", "private": true }
+          JSON
+
+          cat > packages/config/tsconfig.base.json <<'JSON'
+          { "compilerOptions": { "strict": true } }
+          JSON
+
+          cat > packages/config/eslint-config/index.cjs <<'CJS'
+          module.exports = {
+            root: false,
+            parserOptions: { ecmaVersion: "latest", sourceType: "module" },
+            env: { es2022: true, node: true, browser: true },
+            extends: ["next/core-web-vitals"],
+            rules: { "no-console": "warn" }
+          };
+          CJS
+
+          # apps/web
+          mkdir -p apps/web/src/app/(arpai)
+          cat > apps/web/package.json <<'JSON'
+          {
+            "name": "web",
+            "private": true,
+            "scripts": {
+              "dev": "next dev -p 3000",
+              "build": "next build",
+              "start": "next start -p 3000",
+              "lint": "eslint . --ext .ts,.tsx --max-warnings=0"
+            },
+            "dependencies": {
+              "next": "14.2.5",
+              "react": "18.3.1",
+              "react-dom": "18.3.1",
+              "@arpai/ui": "*"
+            },
+            "devDependencies": {
+              "autoprefixer": "^10.4.19",
+              "postcss": "^8.4.39",
+              "tailwindcss": "^3.4.7",
+              "typescript": "^5.5.4",
+              "eslint": "^9.7.0",
+              "eslint-config-next": "14.2.5"
+            }
+          }
+          JSON
+
+          cat > apps/web/next.config.ts <<'TS'
+          import type { NextConfig } from "next";
+          const nextConfig: NextConfig = { reactStrictMode: true };
+          export default nextConfig;
+          TS
+
+          cat > apps/web/postcss.config.js <<'JS'
+          module.exports = { plugins: { tailwindcss: {}, autoprefixer: {} } };
+          JS
+
+          cat > apps/web/tailwind.config.ts <<'TS'
+          import type { Config } from "tailwindcss";
+          const config: Config = {
+            content: ["./src/app/**/*.{ts,tsx}", "../../packages/ui/src/**/*.{ts,tsx}"],
+            theme: { extend: {} },
+            plugins: []
+          };
+          export default config;
+          TS
+
+          cat > apps/web/tsconfig.json <<'JSON'
+          {
+            "extends": "../../tsconfig.json",
+            "compilerOptions": {
+              "baseUrl": ".",
+              "paths": { "@arpai/ui": ["../../packages/ui/src"] }
+            }
+          }
+          JSON
+
+          mkdir -p apps/web/src/app/api/health
+          cat > apps/web/src/app/api/health/route.ts <<'TS'
+          export async function GET() {
+            return new Response(JSON.stringify({ ok: true, ts: new Date().toISOString() }), {
+              headers: { "content-type": "application/json" },
+              status: 200
+            });
+          }
+          TS
+
+          mkdir -p apps/web/src/app
+          cat > apps/web/src/app/globals.css <<'CSS'
+          @tailwind base;
+          @tailwind components;
+          @tailwind utilities;
+          :root { color-scheme: light dark; }
+          body { @apply bg-neutral-950 text-neutral-100; }
+          a { @apply text-amber-400 hover:text-amber-300; }
+          CSS
+
+          cat > apps/web/src/app/layout.tsx <<'TSX'
+          import "../app/globals.css";
+          import { TopNav } from "@arpai/ui";
+          export const metadata = {
+            title: "ARPAI OS",
+            description: "Unified operating surface for DealerAI, TeachAI, ScrollFire, Skillverse, RPAY"
+          };
+          export default function RootLayout({ children }: { children: React.ReactNode }) {
+            return (
+              <html lang="en">
+                <body className="min-h-screen">
+                  <TopNav />
+                  <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
+                </body>
+              </html>
+            );
+          }
+          TSX
+
+          # (arpai) routes
+          cat > apps/web/src/app/(arpai)/page.tsx <<'TSX'
+          export default function HomePage() {
+            return (
+              <section className="space-y-3">
+                <h1 className="text-3xl font-bold">ARPAI OS</h1>
+                <p>Welcome. Choose a surface to explore.</p>
+              </section>
+            );
+          }
+          TSX
+
+          for route in dealer-ai teach-ai scrollfire skillverse rpay command; do
+            mkdir -p "apps/web/src/app/(arpai)/$route"
+            cat > "apps/web/src/app/(arpai)/$route/page.tsx" <<TSX
+          export default function ${route//-}() {
+            return (
+              <section className="space-y-2">
+                <h2 className="text-2xl font-semibold">${route^}</h2>
+                <p>Demo surface.</p>
+              </section>
+            );
+          }
+          TSX
+          done
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: init-scaffold
+          commit-message: "init: ARPAI mono-repo scaffold"
+          title: "init: ARPAI mono-repo scaffold"
+          body: "This PR scaffolds Turborepo + Next.js App Router + Tailwind + ESLint/Prettier, adds (arpai) routes and /api/health. Includes Notion ARPAI Command template in /docs."
+          labels: "orchestrator,init"
+          draft: false

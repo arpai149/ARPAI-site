@@ -278,17 +278,38 @@ jobs:
           }
           TSX
 
-          # (arpai) routes
-          cat > apps/web/src/app/(arpai)/page.tsx <<'TSX'
-          export default function HomePage() {
-            return (
-              <section className="space-y-3">
-                <h1 className="text-3xl font-bold">ARPAI OS</h1>
-                <p>Welcome. Choose a surface to explore.</p>
-              </section>
-            );
-          }
-          TSX
+          # (# (arpai) routes
+cat > apps/web/src/app/(arpai)/page.tsx <<'TSX'
+export default function HomePage() {
+  return (
+    <section className="space-y-3">
+      <h1 className="text-3xl font-bold">ARPAI OS</h1>
+      <p>Welcome. Choose a surface to explore.</p>
+    </section>
+  );
+}
+TSX
+
+# Generate child route pages
+for route in dealer-ai teach-ai scrollfire skillverse rpay command; do
+  dir="apps/web/src/app/(arpai)/$route"
+  mkdir -p "$dir"
+
+  # Component name: dealer-ai -> DealerAi ; rpay -> Rpay
+  comp_name="$(echo "$route" | tr '-' ' ' | awk '{for(i=1;i<=NF;i++){ $i=toupper(substr($i,1,1)) substr($i,2)}; print}' | tr -d ' ')"
+  # Title for H2: dealer-ai -> Dealer-Ai
+  title="$(echo "$route" | sed -E 's/(^|-)([a-z])/\U\2/g')"
+
+  cat > "$dir/page.tsx" <<TSX
+export default function ${comp_name}() {
+  return (
+    <section className="space-y-2">
+      <h2 className="text-2xl font-semibold">${title}</h2>
+      <p>Demo surface.</p>
+    </section>
+  );
+}
+TSX
 
           for route in dealer-ai teach-ai scrollfire skillverse rpay command; do
             mkdir -p "apps/web/src/app/(arpai)/$route"

@@ -1,4 +1,4 @@
-name: ARPAI Orchestrator (Scaffold → PR → Deploy)
+name: ARPAI Orchestrator (Scaffold → PR)
 
 on:
   workflow_dispatch:
@@ -6,10 +6,6 @@ on:
       projectName:
         description: "Project folder (apps/web)"
         default: "web"
-        required: true
-      runVercel:
-        description: "Deploy with Vercel CLI after merge? (requires VERCEL_TOKEN)"
-        default: "false"
         required: true
 
 jobs:
@@ -30,7 +26,7 @@ jobs:
           set -euo pipefail
 
           # Root files
-          mkdir -p docs packages/apps
+          mkdir -p docs packages apps
           cat > package.json <<'JSON'
           {
             "name": "arpai",
@@ -175,7 +171,7 @@ jobs:
           CJS
 
           # apps/web
-          mkdir -p apps/web/src/app/(arpai)
+          mkdir -p "apps/web/src/app/(arpai)"
           cat > apps/web/package.json <<'JSON'
           {
             "name": "web",
@@ -284,18 +280,26 @@ jobs:
           }
           TSX
 
+          # Generate child route pages (robust casing + valid component names)
           for route in dealer-ai teach-ai scrollfire skillverse rpay command; do
-            mkdir -p "apps/web/src/app/(arpai)/$route"
-            cat > "apps/web/src/app/(arpai)/$route/page.tsx" <<TSX
-          export default function ${route//-}() {
-            return (
-              <section className="space-y-2">
-                <h2 className="text-2xl font-semibold">${route^}</h2>
-                <p>Demo surface.</p>
-              </section>
-            );
-          }
-          TSX
+            dir="apps/web/src/app/(arpai)/$route"
+            mkdir -p "$dir"
+
+            # Component name: dealer-ai -> DealerAi ; rpay -> Rpay
+            comp_name="$(echo "$route" | tr '-' ' ' | awk '{for(i=1;i<=NF;i++){ $i=toupper(substr($i,1,1)) substr($i,2)}; print}' | tr -d ' ')"
+            # Title for H2: dealer-ai -> Dealer-Ai
+            title="$(echo "$route" | sed -E 's/(^|-)([a-z])/\U\2/g')"
+
+            cat > "$dir/page.tsx" <<TSX
+export default function ${comp_name}() {
+  return (
+    <section className="space-y-2">
+      <h2 className="text-2xl font-semibold">${title}</h2>
+      <p>Demo surface.</p>
+    </section>
+  );
+}
+TSX
           done
 
       - name: Create PR
@@ -307,30 +311,3 @@ jobs:
           body: "This PR scaffolds Turborepo + Next.js App Router + Tailwind + ESLint/Prettier, adds (arpai) routes and /api/health."
           labels: "orchestrator,init"
           draft: false
-
-  deploy:
-    if: ${{ github.event.inputs.runVercel == 'true' }}
-    needs: scaffold
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout merged main
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "18"
-      - name: Install Vercel CLI
-        run: npm i -g vercel@latest
-      - name: Deploy with Vercel (requires token & existing project linkage)
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          if [ -z "${VERCEL_TOKEN:-}" ]; then
-            echo "No VERCEL_TOKEN provided. Skipping CLI deploy."
-            exit 0
-          fi
-          vercel pull --yes --environment=production || true
-          vercel build || true
-          vercel deploy --prebuilt || true

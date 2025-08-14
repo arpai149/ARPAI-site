@@ -1,1 +1,16 @@
-<!DOCTYPE html><html><head><title>ARPAI</title></head><body><h1>Welcome to ARPAI</h1></body></html>
+<!DOCTYPE html><html><head><!-- PWA Essentials -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#000000" />
+<link rel="icon" href="icon512.png" type="image/png" />
+<script src="service-worker.js"></script>
+
+<!-- Nova Agent Logic -->
+<script src="app.js" defer></script>
+<script>
+  fetch('agents.json')
+    .then(response => response.json())
+    .then(data => {
+      console.log("🚀 Agents Loaded:", data);
+      // You can trigger Nova initialization here
+    });
+</script><title>ARPAI</title></head><body><h1>Welcome to ARPAI</h1></body></html>

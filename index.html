@@ -85,6 +85,11 @@
         window.location.href = "dealerai.html";
       } else if (input.includes("dashboard")) {
         window.location.href = "dashboard.html";
+      } else if (input.includes("take full control")) {
+        responseBox.innerText = "🧠 Nova Protocol Engaged: Full system orchestration active. Routing all subsystems...";
+        setTimeout(() => {
+          window.location.href = "dashboard.html";
+        }, 3000);
       } else {
         responseBox.innerText = `🤔 Nova heard: "${input}" — but doesn't recognize the command... yet.`;
       }

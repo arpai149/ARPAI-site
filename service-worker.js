@@ -1,0 +1,1 @@
+// Service worker file for offline support

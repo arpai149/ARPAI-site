@@ -2,98 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>ARPAI • Nova Launcher</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARPAI • Nova Dashboard</title>
-  <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#000000" />
+  <link rel="manifest" href="manifest.json" />
   <link rel="icon" href="icon512.png" type="image/png" />
-  <link rel="stylesheet" href="style.css" />
-  <script src="service-worker.js"></script>
-  <script src="app.js" defer></script>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0a0a0a;
-      color: #f0f0f0;
-      padding: 2rem;
-      text-align: center;
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0b0b0b;
+      color: #00ffcc;
+      font-family: 'Courier New', Courier, monospace;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
     h1 {
       font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    #agent-status {
       margin-bottom: 2rem;
+      text-align: center;
     }
     input[type="text"] {
-      padding: 0.75rem;
-      font-size: 1rem;
       width: 80%;
+      max-width: 500px;
+      padding: 1rem;
+      font-size: 1.1rem;
       border: none;
-      border-radius: 5px;
-      margin-bottom: 1rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background: #0070f3;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 0.5rem;
+      border-radius: 8px;
+      outline: none;
+      background: #111;
+      color: #00ffcc;
     }
     #response {
       margin-top: 2rem;
-      font-size: 1.1rem;
-      color: #0f0;
+      font-size: 1rem;
+      text-align: center;
+      max-width: 500px;
     }
   </style>
 </head>
 <body>
-  <h1>🤖 Nova Agent Command Console</h1>
-  <div id="agent-status">🧠 Loading agents...</div>
-  <input type="text" id="commandInput" placeholder="Type a command for Nova..." />
-  <br />
-  <button onclick="runCommand()">Run</button>
-  <a href="dealerai.html"><button>🚗 Launch DealerAI</button></a>
-  <a href="dashboard.html"><button>📊 Launch Dashboard</button></a>
+  <h1>🤖 Welcome to Nova OS</h1>
+  <input type="text" id="commandInput" placeholder="Type a command (e.g., launch dealerai)" autofocus />
   <div id="response"></div>
 
   <script>
-    let agents = [];
+    document.getElementById("commandInput").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        const input = this.value.toLowerCase();
+        const res = document.getElementById("response");
 
-    fetch('agents.json')
-      .then(response => response.json())
-      .then(data => {
-        agents = data.agents;
-        document.getElementById('agent-status').innerText = `✅ ${agents.length} Agent(s) Loaded: ` + agents.map(a => a.name).join(', ');
-      });
+        if (!input) {
+          res.innerText = "⚠️ Please enter a command.";
+          return;
+        }
 
-    function runCommand() {
-      const input = document.getElementById('commandInput').value.toLowerCase();
-      const responseBox = document.getElementById('response');
+        if (input.includes("dealer")) {
+          res.innerText = "🚗 Launching DealerAI...";
+          setTimeout(() => window.location.href = "dealerai.html", 1000);
+        } else if (input.includes("dashboard")) {
+          res.innerText = "📊 Launching Dashboard...";
+          setTimeout(() => window.location.href = "dashboard.html", 1000);
+        } else if (input.includes("service")) {
+          res.innerText = "🛠️ Launching ServiceAI...";
+          setTimeout(() => window.location.href = "serviceai.html", 1000);
+        } else if (input.includes("follow")) {
+          res.innerText = "🔁 Launching FollowAI...";
+          setTimeout(() => window.location.href = "followai.html", 1000);
+        } else if (input.includes("status")) {
+          res.innerText = "🛰️ Nova is online and fully operational.";
+        } else if (input.includes("take full control")) {
+          res.innerText = "🧠 Nova Protocol Engaged: Total System Orchestration Activated...";
+          setTimeout(() => window.location.href = "dashboard.html", 3000);
+        } else {
+          res.innerText = `🤔 Unknown command: "${input}"`;
+        }
 
-      if (!input) {
-        responseBox.innerText = "⚠️ Please enter a command.";
-        return;
+        this.value = "";
       }
-
-      if (input.includes("status")) {
-        responseBox.innerText = "🛰️ Nova Status: Online and ready.";
-      } else if (input.includes("dealer")) {
-        window.location.href = "dealerai.html";
-      } else if (input.includes("dashboard")) {
-        window.location.href = "dashboard.html";
-      } else if (input.includes("take full control")) {
-        responseBox.innerText = "🧠 Nova Protocol Engaged: Full system orchestration active. Routing all subsystems...";
-        setTimeout(() => {
-          window.location.href = "dashboard.html";
-        }, 3000);
-      } else {
-        responseBox.innerText = `🤔 Nova heard: "${input}" — but doesn't recognize the command... yet.`;
-      }
-    }
+    });
   </script>
 </body>
 </html>

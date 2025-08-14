@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DealerAI Interface</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      color: #00ffcc;
+    }
+    .section {
+      border: 1px solid #444;
+      border-radius: 10px;
+      margin: 1rem auto;
+      padding: 1.5rem;
+      max-width: 600px;
+      background: #111;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      text-align: left;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background: #00ffcc;
+      color: #000;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🚗 DealerAI Command Panel</h1>
+
+  <div class="section">
+    <h2>📋 Lead Input</h2>
+    <label for="leadName">Customer Name:</label>
+    <input type="text" id="leadName" placeholder="Jane Doe" />
+    <label for="vehicleInterest">Vehicle of Interest:</label>
+    <input type="text" id="vehicleInterest" placeholder="2024 Nissan Rogue" />
+    <label for="leadNotes">Notes:</label>
+    <textarea id="leadNotes" rows="4" placeholder="Customer wants lease info..."></textarea>
+    <button onclick="submitLead()">Submit Lead</button>
+    <div id="leadResult" style="margin-top: 1rem; color: #0f0;"></div>
+  </div>
+
+  <script>
+    function submitLead() {
+      const name = document.getElementById('leadName').value;
+      const vehicle = document.getElementById('vehicleInterest').value;
+      const notes = document.getElementById('leadNotes').value;
+      const result = document.getElementById('leadResult');
+
+      if (!name || !vehicle) {
+        result.style.color = '#f00';
+        result.innerText = "⚠️ Please fill out all required fields.";
+        return;
+      }
+
+      // Simulated lead submission logic
+      result.style.color = '#0f0';
+      result.innerText = `✅ Lead submitted for ${name} interested in ${vehicle}. Nova is on it.`;
+    }
+  </script>
+</body>
+</html>

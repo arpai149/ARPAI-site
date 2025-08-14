@@ -41,6 +41,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+      margin: 0.5rem;
     }
     #response {
       margin-top: 2rem;
@@ -55,6 +56,8 @@
   <input type="text" id="commandInput" placeholder="Type a command for Nova..." />
   <br />
   <button onclick="runCommand()">Run</button>
+  <a href="dealerai.html"><button>🚗 Launch DealerAI</button></a>
+  <a href="dashboard.html"><button>📊 Launch Dashboard</button></a>
   <div id="response"></div>
 
   <script>
@@ -68,19 +71,20 @@
       });
 
     function runCommand() {
-      const input = document.getElementById('commandInput').value;
-      let responseBox = document.getElementById('response');
+      const input = document.getElementById('commandInput').value.toLowerCase();
+      const responseBox = document.getElementById('response');
 
       if (!input) {
         responseBox.innerText = "⚠️ Please enter a command.";
         return;
       }
 
-      // Placeholder logic (simulate Nova understanding)
-      if (input.toLowerCase().includes("status")) {
+      if (input.includes("status")) {
         responseBox.innerText = "🛰️ Nova Status: Online and ready.";
-      } else if (input.toLowerCase().includes("launch dealerai")) {
-        responseBox.innerText = "🚘 Launching DealerAI interface...";
+      } else if (input.includes("dealer")) {
+        window.location.href = "dealerai.html";
+      } else if (input.includes("dashboard")) {
+        window.location.href = "dashboard.html";
       } else {
         responseBox.innerText = `🤔 Nova heard: "${input}" — but doesn't recognize the command... yet.`;
       }

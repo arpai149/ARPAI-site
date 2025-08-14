@@ -1,16 +1,90 @@
-<!DOCTYPE html><html><head><!-- PWA Essentials -->
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#000000" />
-<link rel="icon" href="icon512.png" type="image/png" />
-<script src="service-worker.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARPAI • Nova Dashboard</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="icon512.png" type="image/png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="service-worker.js"></script>
+  <script src="app.js" defer></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    #agent-status {
+      margin-bottom: 2rem;
+    }
+    input[type="text"] {
+      padding: 0.75rem;
+      font-size: 1rem;
+      width: 80%;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #0070f3;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    #response {
+      margin-top: 2rem;
+      font-size: 1.1rem;
+      color: #0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 Nova Agent Command Console</h1>
+  <div id="agent-status">🧠 Loading agents...</div>
+  <input type="text" id="commandInput" placeholder="Type a command for Nova..." />
+  <br />
+  <button onclick="runCommand()">Run</button>
+  <div id="response"></div>
 
-<!-- Nova Agent Logic -->
-<script src="app.js" defer></script>
-<script>
-  fetch('agents.json')
-    .then(response => response.json())
-    .then(data => {
-      console.log("🚀 Agents Loaded:", data);
-      // You can trigger Nova initialization here
-    });
-</script><title>ARPAI</title></head><body><h1>Welcome to ARPAI</h1></body></html>
+  <script>
+    let agents = [];
+
+    fetch('agents.json')
+      .then(response => response.json())
+      .then(data => {
+        agents = data.agents;
+        document.getElementById('agent-status').innerText = `✅ ${agents.length} Agent(s) Loaded: ` + agents.map(a => a.name).join(', ');
+      });
+
+    function runCommand() {
+      const input = document.getElementById('commandInput').value;
+      let responseBox = document.getElementById('response');
+
+      if (!input) {
+        responseBox.innerText = "⚠️ Please enter a command.";
+        return;
+      }
+
+      // Placeholder logic (simulate Nova understanding)
+      if (input.toLowerCase().includes("status")) {
+        responseBox.innerText = "🛰️ Nova Status: Online and ready.";
+      } else if (input.toLowerCase().includes("launch dealerai")) {
+        responseBox.innerText = "🚘 Launching DealerAI interface...";
+      } else {
+        responseBox.innerText = `🤔 Nova heard: "${input}" — but doesn't recognize the command... yet.`;
+      }
+    }
+  </script>
+</body>
+</html>

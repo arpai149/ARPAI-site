@@ -1,0 +1,19 @@
+{
+  "name": "ARPAI Deployment Notify",
+  "nodes": [
+    {
+      "id": "Deploy Trigger",
+      "name": "Deployment Result Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": { "path": "arpai/deploy-result", "httpMethod": "POST" }
+    },
+    {
+      "id": "Notify",
+      "name": "Send Notification",
+      "type": "n8n-nodes-base.slack",
+      "parameters": {
+        "text": "ARPAI deployment status: {{$json.status}}"
+      }
+    }
+  ]
+}

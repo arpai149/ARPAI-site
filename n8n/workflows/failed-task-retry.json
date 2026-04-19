@@ -1,0 +1,20 @@
+{
+  "name": "ARPAI Failed Task Retry",
+  "nodes": [
+    {
+      "id": "Trigger",
+      "name": "Failure Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": { "path": "arpai/task-failed", "httpMethod": "POST" }
+    },
+    {
+      "id": "Retry",
+      "name": "Retry Execute",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$env.ARPAI_BASE_URL + '/api/execute'}}",
+        "method": "POST"
+      }
+    }
+  ]
+}

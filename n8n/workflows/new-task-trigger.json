@@ -1,0 +1,28 @@
+{
+  "name": "ARPAI New Task Trigger",
+  "nodes": [
+    {
+      "id": "Webhook",
+      "name": "Task Created Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": {
+        "path": "arpai/task-created",
+        "httpMethod": "POST"
+      }
+    },
+    {
+      "id": "Command",
+      "name": "Route To /api/command",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$env.ARPAI_BASE_URL + '/api/command'}}",
+        "method": "POST"
+      }
+    }
+  ],
+  "connections": {
+    "Task Created Webhook": {
+      "main": [[{"node": "Route To /api/command", "type": "main", "index": 0}]]
+    }
+  }
+}

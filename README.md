@@ -1,43 +1,45 @@
-# ARPAI Website (Next.js)
+# ARPAI OS Unified System
 
-High-conversion landing page + live lead capture UI that sends leads directly into `arpai-core`.
+ARPAI OS is now structured as a single Next.js + Supabase orchestration platform with command execution, modular agents, task memory, deployment controls, and automation workflow templates.
 
-## What it does
-- Captures lead fields: name, email, phone, vehicle of interest, optional message.
-- Executes live backend flow on submit:
-  1. `POST /api/lead/intake`
-  2. `POST /api/lead/classify`
-  3. `POST /api/lead/respond`
-  4. `POST /api/lead/route`
-- Shows confirmation + instant SMS/email preview to user.
+## Core modules
+- **Command Engine**: `/api/command` and `/api/execute` run `runCommand(command)` with sequential Nova → Jura → Onyx → Alex → Sentinel → Logger execution.
+- **Persistent Memory**: Supabase-backed `tasks`, `logs`, `agents`, `workflows`, and `users` tables.
+- **Deployment Integration**: `/api/deploy` triggers GitHub repository dispatch + Vercel deploy hook.
+- **UI**:
+  - `/` command input + voice command button
+  - `/taskboard` live task polling dashboard
+  - `/deploy` manual deploy trigger
+  - `/dashboard` system overview metrics
+- **Automation**: n8n workflow JSON templates in `n8n/workflows/`.
 
-## Env setup
-Copy `.env.example` to `.env` and set:
+## Environment Variables
+Create `.env.local`:
 
-- `NEXT_PUBLIC_ARPAI_BACKEND_URL` (e.g. `https://arpai-core.vercel.app`)
-- `NEXT_PUBLIC_ARPAI_API_KEY` (if `arpai-core` API key auth is enabled)
+```bash
+SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
+OPENAI_API_KEY=sk-...
+OPENAI_MODEL=gpt-4.1-mini
+GITHUB_REPO=org/repo
+GITHUB_TOKEN=ghp_...
+VERCEL_DEPLOY_HOOK_URL=https://api.vercel.com/v1/integrations/deploy/...
+```
 
-## Run locally
+## Supabase bootstrap
+Run the schema in `supabase/schema.sql` via Supabase SQL editor.
+
+## Run
 ```bash
 npm install
 npm run dev
 ```
 
-## Deploy to Vercel
-1. Push repo to GitHub.
-2. In Vercel, import the repo.
-3. Framework preset: **Next.js** (auto-detected).
-4. Add environment variables:
-   - `NEXT_PUBLIC_ARPAI_BACKEND_URL`
-   - `NEXT_PUBLIC_ARPAI_API_KEY` (if needed)
-5. Deploy.
+## Validation flow
+1. Run command: `hello world` from `/`.
+2. Verify records in `tasks` and `logs`.
+3. Visit `/taskboard` and `/dashboard` for live updates.
+4. Trigger deployment from `/deploy`.
 
-## Full lead flow test
-1. Open deployed site.
-2. Submit lead form with realistic values.
-3. Verify in arpai-core logs/admin APIs:
-   - lead created or deduped,
-   - classification generated,
-   - response generated,
-   - routing assigned.
-4. Confirm browser console prints each backend response block (`[ARPAI FLOW]`).
+## n8n setup
+Import all JSON files under `n8n/workflows/`, then bind environment variable `ARPAI_BASE_URL` and credentials for Slack or chosen notifier.

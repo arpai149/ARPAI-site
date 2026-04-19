@@ -1,0 +1,20 @@
+{
+  "name": "ARPAI External Command Router",
+  "nodes": [
+    {
+      "id": "External Hook",
+      "name": "External Command Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "parameters": { "path": "arpai/external-command", "httpMethod": "POST" }
+    },
+    {
+      "id": "Execute Command",
+      "name": "Call /api/command",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$env.ARPAI_BASE_URL + '/api/command'}}",
+        "method": "POST"
+      }
+    }
+  ]
+}

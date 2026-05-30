@@ -2,8 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'ARPAI | Check Availability Fast',
-  description: 'Real-time dealership lead capture and inventory availability requests.'
+  title: 'ARPAI | AI Workforce Systems',
+  description: 'ARPAI builds AI workforce systems, governed agent operations, and operator dashboards for dealerships and businesses.'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

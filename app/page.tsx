@@ -1,43 +1,21 @@
-const products = [
-  {
-    name: 'Workforce AI',
-    note: 'AI workers for sales, service, marketing, admin, and operations.'
-  },
-  {
-    name: 'Dealer AI',
-    note: 'Lead, inventory, BDC, service-to-sales, and operator intelligence for dealerships.'
-  },
-  {
-    name: 'ARPAI OS',
-    note: 'The governed operating layer for AI agents, workflows, telemetry, and tasks.'
-  },
-  {
-    name: 'AI Agents',
-    note: 'Deployable BDC, inventory, marketing, sales, service, and operations agents.'
-  }
+const cards = [
+  { label: 'Customer', value: 'Customer #1', note: 'First live deployment.' },
+  { label: 'Inventory', value: '17 rows', note: 'Governed public inventory view.' },
+  { label: 'Leads', value: 'Active', note: 'Lead intake path exists.' },
+  { label: 'Workflows', value: 'Connected', note: 'Automation lane under verification.' }
 ];
 
-const departments = [
-  'Nova / Operations',
-  'Onyx / Engineering',
-  'Violet / Design',
-  'Atlas / Sales',
-  'Pulse / Marketing',
-  'Alex / Analytics',
-  'Draco / Data',
-  'Sentinel / Security',
-  'Jura / Legal',
-  'Memora / Knowledge'
-];
-
-const proof = [
-  'Supabase runtime',
-  'n8n orchestration',
-  'GitHub + Vercel deployment',
-  'Lead lifecycle engine',
-  'Inventory runtime',
-  'Audit logging',
-  'Operator dashboard foundation'
+const milestones = [
+  '[x] Company Site Exists',
+  '[x] Product Repo Identified',
+  '[x] Customer #1 Runtime Exists',
+  '[x] Supabase Runtime Connected',
+  '[x] n8n Runtime Connected',
+  '[ ] Customer #1 Freeze',
+  '[ ] ARPAI Dashboard',
+  '[ ] Runtime Connected visibly in OS',
+  '[ ] First External Demo',
+  '[ ] First Paying Customer Beyond Customer #1'
 ];
 
 export default function Page() {
@@ -46,79 +24,47 @@ export default function Page() {
       <section className="hero company-hero">
         <div className="container hero-layout">
           <div>
-            <div className="eyebrow">ARPAI · AI Workforce Systems</div>
-            <h1>Build AI departments, not just AI tools.</h1>
-            <p className="hero-copy">
-              ARPAI builds governed AI workforce systems that help businesses capture leads, run follow-up, understand inventory, monitor operations, and deploy AI agents with control.
-            </p>
-            <div className="actions">
-              <a className="btn primary" href="#demo">Book a Demo</a>
-              <a className="btn secondary" href="#products">View Products</a>
-            </div>
+            <div className="eyebrow">ARPAI OS</div>
+            <h1>Operator command center.</h1>
+            <p className="hero-copy">A single dashboard for customers, leads, inventory, workflows, agents, and runtime health.</p>
           </div>
           <div className="command-card">
-            <span>Runtime Status</span>
-            <strong>ARPAI OS v1</strong>
-            <p>Queue governance, audit telemetry, lead runtime, and inventory intelligence are converging into one operator surface.</p>
+            <span>Status</span>
+            <strong>Dashboard v1</strong>
+            <p>Nova owns customer freeze. Alex owns dashboard visibility. John approves demo readiness.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="container section" id="products">
-        <div className="section-head">
-          <span className="eyebrow">Products</span>
-          <h2>Sell AI workforces. Deploy AI operations.</h2>
-          <p>ARPAI starts with dealerships and expands into every business that needs faster execution, cleaner follow-up, and operational visibility.</p>
-        </div>
-        <div className="card-grid">
-          {products.map((product) => (
-            <article className="card" key={product.name}>
-              <h3>{product.name}</h3>
-              <p>{product.note}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="container section split">
-        <div className="panel dark-panel">
-          <span className="eyebrow">Customer #1</span>
-          <h2>O'Neil Nissan is the proving ground.</h2>
-          <p>
-            The dealership deployment becomes ARPAI's first case study: lead runtime, inventory runtime, follow-up workflows, operator dashboards, and campaign intelligence.
-          </p>
-        </div>
-        <div className="panel">
-          <span className="eyebrow">Proof Already Built</span>
-          <ul className="check-list">
-            {proof.map((item) => <li key={item}>{item}</li>)}
-          </ul>
         </div>
       </section>
 
       <section className="container section">
         <div className="section-head">
-          <span className="eyebrow">Operating Model</span>
-          <h2>Fortune-100 structure, AI-native speed.</h2>
-          <p>ARPAI runs through specialized AI departments that turn strategy into execution across product, engineering, design, sales, marketing, analytics, security, legal, and knowledge.</p>
+          <span className="eyebrow">Customer #1</span>
+          <h2>Command cards.</h2>
+          <p>First visible ARPAI OS surface.</p>
         </div>
-        <div className="department-grid">
-          {departments.map((department) => <div className="department" key={department}>{department}</div>)}
+        <div className="card-grid">
+          {cards.map((card) => (
+            <article className="card" key={card.label}>
+              <span className="eyebrow compact">{card.label}</span>
+              <h3>{card.value}</h3>
+              <p>{card.note}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      <section className="container section pricing" id="demo">
-        <div>
-          <span className="eyebrow">Commercial Motion</span>
-          <h2>Packages built to sell.</h2>
-          <p>Starter for visibility, Growth for active agents, Enterprise for full ARPAI OS deployment.</p>
+      <section className="container section">
+        <div className="section-head">
+          <span className="eyebrow">Milestones</span>
+          <h2>Execution board.</h2>
         </div>
-        <div className="pricing-grid">
-          <div className="price-card"><strong>Starter</strong><span>Operator visibility + lead capture</span></div>
-          <div className="price-card featured"><strong>Growth</strong><span>AI agents + lifecycle workflows</span></div>
-          <div className="price-card"><strong>Enterprise</strong><span>Full ARPAI OS + custom deployment</span></div>
+        <div className="card-grid">
+          {milestones.map((milestone) => (
+            <article className="card" key={milestone}>
+              <h3>{milestone}</h3>
+            </article>
+          ))}
         </div>
-        <a className="btn primary wide" href="mailto:cashin@arpai.co?subject=ARPAI Demo Request">Book Founder Demo</a>
       </section>
     </main>
   );

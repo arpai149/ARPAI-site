@@ -1,43 +1,27 @@
-# ARPAI Website (Next.js)
+# ARPAI ONE Parent Surface
 
-High-conversion landing page + live lead capture UI that sends leads directly into `arpai-core`.
+`arpai.co` is the parent company and platform surface for ARPAI ONE.
 
-## What it does
-- Captures lead fields: name, email, phone, vehicle of interest, optional message.
-- Executes live backend flow on submit:
-  1. `POST /api/lead/intake`
-  2. `POST /api/lead/classify`
-  3. `POST /api/lead/respond`
-  4. `POST /api/lead/route`
-- Shows confirmation + instant SMS/email preview to user.
+## Platform role
 
-## Env setup
-Copy `.env.example` to `.env` and set:
+ARPAI ONE owns shared platform capability: governance, agents, tenant resolution, canonical architecture, approvals, evidence, observability, tool access, and reusable business capabilities.
 
-- `NEXT_PUBLIC_ARPAI_BACKEND_URL` (e.g. `https://arpai-core.vercel.app`)
-- `NEXT_PUBLIC_ARPAI_API_KEY` (if `arpai-core` API key auth is enabled)
+Tenant experiences such as `oneilnissan.ai` consume ARPAI ONE under an explicit tenant identity. Tenant-specific data and configuration remain isolated; reusable core logic must not be duplicated into tenant applications.
 
-## Run locally
-```bash
-npm install
-npm run dev
-```
+## Current canonical model
 
-## Deploy to Vercel
-1. Push repo to GitHub.
-2. In Vercel, import the repo.
-3. Framework preset: **Next.js** (auto-detected).
-4. Add environment variables:
-   - `NEXT_PUBLIC_ARPAI_BACKEND_URL`
-   - `NEXT_PUBLIC_ARPAI_API_KEY` (if needed)
-5. Deploy.
+- Parent platform: `arpai.co`
+- Parent Vercel project: `arpai-co-production`
+- ARPAI Core runtime: `arpai-dealer-os-control-plane`
+- Canonical state: Supabase `arpai-core`
+- Tenant 001: O'Neil Nissan (`tenant_001`)
+- Tenant 001 intended surface: `oneilnissan.ai`
+- Agent runtime: Nova / Onyx / Draco / Sentinel, shadow mode until production proof passes
 
-## Full lead flow test
-1. Open deployed site.
-2. Submit lead form with realistic values.
-3. Verify in arpai-core logs/admin APIs:
-   - lead created or deduped,
-   - classification generated,
-   - response generated,
-   - routing assigned.
-4. Confirm browser console prints each backend response block (`[ARPAI FLOW]`).
+## Governance
+
+ARPAI ONE inherits the ARPAI Biblical Stewardship Covenant. Platform doctrine is not tenant-overridable. Truth, human dignity, stewardship, justice, service, accountable human authority, and integrity constrain optimization and commercial execution.
+
+## Completion rule
+
+A page, endpoint, agent response, or workflow is not considered complete by existence alone. A capability must be tenant-scoped, connected to canonical state, execute against real evidence, preserve required approvals, expose observability, and survive production verification before it is declared complete.

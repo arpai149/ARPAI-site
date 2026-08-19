@@ -1,121 +1,141 @@
-const cards = [
+const platformAreas = [
   {
-    label: 'Parent Platform',
-    value: 'ARPAI ONE',
-    note: 'ARPAI-owned control plane, governance, agents, capabilities, and shared platform services.'
+    label: 'Customer Operations',
+    title: 'AI-assisted customer workflows',
+    text: 'Route shopper, service, finance, and follow-up requests into clear next actions with human review where it matters.'
   },
   {
-    label: 'Tenant 001',
-    value: "O'Neil Nissan",
-    note: 'Reference implementation. Tenant identity is canonical and tenant-owned runtime data is being explicitly scoped.'
-  },
-  {
-    label: 'Agent Runtime',
-    value: 'Shadow Mode',
-    note: 'Nova, Onyx, Draco, and Sentinel are connected to OpenAI; tenant-scoped canonical proof remains the production gate.'
+    label: 'Business Systems',
+    title: 'Connected operating data',
+    text: 'Bring inventory, leads, appointments, tasks, and evidence into one governed layer that teams can trust.'
   },
   {
     label: 'Governance',
-    value: 'Biblical Stewardship',
-    note: 'Truth above optimization, people above extraction, stewardship above waste, service above domination, integrity above revenue.'
+    title: 'Accountable automation',
+    text: 'Use approval paths, audit trails, permissions, and source-backed responses so automation stays useful and supervised.'
   }
 ];
 
-const principles = [
-  'God remains above the system.',
-  'Truth above optimization.',
-  'People above extraction.',
-  'Stewardship above waste.',
-  'Justice above partiality.',
-  'Service above domination.',
-  'Integrity above revenue.'
+const operatingPrinciples = [
+  'Truthful answers over inflated claims',
+  'Human authority over autonomous decisions',
+  'Customer clarity over pressure',
+  'Measurable outcomes over demos',
+  'Secure tenant data boundaries'
 ];
 
-const gates = [
-  '[x] arpai.co identified as the parent surface',
-  '[x] Tenant 001 formalized in canonical state',
-  '[x] Biblical Stewardship Covenant made platform-level doctrine',
-  '[x] Nova established as an ARPAI Core agent',
-  '[x] Legacy lead, appointment, and inventory records given a tenant boundary',
-  '[ ] Tenant-scoped Nova canonical proof passes',
-  '[ ] Control-plane convergence merged to production',
-  '[ ] oneilnissan.ai attached and verified as Tenant 001 surface',
-  '[ ] First complete capability production-proven end to end',
-  '[ ] External tenant onboarding proven'
+const productLines = [
+  'Dealer AI websites and guided shopping',
+  'Inventory and offer decision support',
+  'Lead, appointment, and follow-up orchestration',
+  'Manager review, approvals, and evidence trails',
+  'Executive visibility into AI-assisted operations'
 ];
 
 export default function Page() {
   return (
     <main>
-      <section className="hero company-hero">
+      <section className="hero">
+        <div className="hero-media" aria-hidden="true">
+          <div className="signal-panel">
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
         <div className="container hero-layout">
-          <div>
-            <div className="eyebrow">ARPAI ONE</div>
-            <h1>The parent operating system for AI-powered businesses.</h1>
+          <div className="hero-copy-wrap">
+            <p className="eyebrow">ARPAI ONE</p>
+            <h1>AI workforce systems for businesses that need trust at scale.</h1>
             <p className="hero-copy">
-              One governed platform for agents, tenant identity, canonical state, workflows, approvals, evidence,
-              observability, and business outcomes. Tenant experiences run on ARPAI ONE; they do not duplicate it.
+              ARPAI builds governed AI operations for teams that depend on accurate data, accountable workflows, and
+              human oversight. Our platform helps companies turn customer intent, operational records, and team action
+              into one connected system.
             </p>
+            <div className="actions" aria-label="Primary actions">
+              <a className="btn primary" href="mailto:hello@arpai.co">Talk to ARPAI</a>
+              <a className="btn secondary" href="https://oneilnissan.ai">View dealership experience</a>
+            </div>
           </div>
-          <div className="command-card">
-            <span>Convergence Status</span>
-            <strong>Tenant architecture active</strong>
+          <aside className="proof-panel" aria-label="ARPAI platform focus">
+            <span>Platform focus</span>
+            <strong>Governed AI operations</strong>
             <p>
-              ARPAI owns the platform. O&apos;Neil Nissan is Tenant 001. Production capability is declared only after
-              tenant-scoped evidence and runtime verification agree.
+              Built for real businesses where data quality, approvals, customer experience, and operational follow-through
+              have to work together.
             </p>
-          </div>
+          </aside>
         </div>
       </section>
 
       <section className="container section">
         <div className="section-head">
-          <span className="eyebrow">Platform Model</span>
-          <h2>ARPAI Core first. Tenant configuration second.</h2>
-          <p>Reusable intelligence belongs to ARPAI Core; tenant data, identity, credentials, and business configuration remain isolated.</p>
-        </div>
-        <div className="card-grid">
-          {cards.map((card) => (
-            <article className="card" key={card.label}>
-              <span className="eyebrow compact">{card.label}</span>
-              <h3>{card.value}</h3>
-              <p>{card.note}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="container section">
-        <div className="section-head">
-          <span className="eyebrow">Stewardship</span>
-          <h2>Built under accountable human authority.</h2>
+          <p className="eyebrow">What We Build</p>
+          <h2>One operating layer for AI-assisted work.</h2>
           <p>
-            Technology serves people. ARPAI does not knowingly fabricate evidence, conceal material information,
-            exploit vulnerability, or place autonomous systems beyond accountable human authority.
+            ARPAI ONE connects the public customer experience with the internal work required to answer accurately,
+            follow up responsibly, and keep teams aligned.
           </p>
         </div>
         <div className="card-grid">
-          {principles.map((principle) => (
-            <article className="card" key={principle}>
-              <h3>{principle}</h3>
+          {platformAreas.map((area) => (
+            <article className="card" key={area.label}>
+              <span className="eyebrow compact">{area.label}</span>
+              <h3>{area.title}</h3>
+              <p>{area.text}</p>
             </article>
           ))}
         </div>
       </section>
 
+      <section className="band">
+        <div className="container split">
+          <div>
+            <p className="eyebrow">Automotive First</p>
+            <h2>Built in the dealership environment, useful beyond it.</h2>
+          </div>
+          <div className="copy-block">
+            <p>
+              Automotive retail is a demanding testbed: live inventory, financing paths, appointment timing, trade-ins,
+              compliance-sensitive conversations, and fast human handoffs. ARPAI uses that environment to build systems
+              that can support any business with complex customer operations.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section className="container section">
-        <div className="section-head">
-          <span className="eyebrow">Production Gates</span>
-          <h2>Proof before proclamation.</h2>
-          <p>No capability is complete because a page exists. It must survive canonical-state, runtime, tenant-isolation, approval, observability, and business-outcome verification.</p>
+        <div className="two-column">
+          <div className="panel">
+            <p className="eyebrow">Platform Capabilities</p>
+            <h2>From customer intent to team action.</h2>
+            <ul className="check-list">
+              {productLines.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="panel muted-panel">
+            <p className="eyebrow">Operating Principles</p>
+            <h2>Automation that stays accountable.</h2>
+            <ul className="check-list">
+              {operatingPrinciples.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div className="card-grid">
-          {gates.map((gate) => (
-            <article className="card" key={gate}>
-              <h3>{gate}</h3>
-            </article>
-          ))}
-        </div>
+      </section>
+
+      <section className="container section final-cta">
+        <p className="eyebrow">ARPAI ONE</p>
+        <h2>Deploy AI where the work actually happens.</h2>
+        <p>
+          We help businesses move from scattered tools and one-off AI experiments into a governed operating system for
+          customer and team workflows.
+        </p>
+        <a className="btn primary" href="mailto:hello@arpai.co">Start a conversation</a>
       </section>
     </main>
   );

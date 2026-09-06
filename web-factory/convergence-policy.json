@@ -1,0 +1,21 @@
+{
+  "keep_in_sites_when": [
+    "content-led",
+    "public",
+    "low-risk",
+    "no sensitive writes",
+    "no complex auth",
+    "lightweight interactivity"
+  ],
+  "graduate_to_vercel_when": [
+    "authentication required",
+    "Supabase or other database writes required",
+    "CRM/DMS connectivity required",
+    "real-time dealer data required",
+    "sensitive customer information involved",
+    "agent execution required",
+    "complex workflow state required",
+    "material financial or operational action required"
+  ],
+  "rule": "Prototype presentation in Sites; move transactional/runtime complexity into canonical Vercel/ARPAI stack."
+}

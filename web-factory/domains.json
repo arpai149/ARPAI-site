@@ -1,0 +1,21 @@
+[
+  {"domain":"arpai.co","state":"BUILD","archetype":"corporate","canonical":"https://arpai.co","purpose":"ARPAI corporate parent and public control-plane front door","priority":1},
+  {"domain":"nissanreviews.com","state":"BUILD","archetype":"authority_media","canonical":"https://nissanreviews.com","purpose":"Nissan authority, reviews, community, comparisons, buying guidance","priority":2},
+  {"domain":"nissantrades.com","state":"BUILD","archetype":"transactional_leadgen","canonical":"https://nissantrades.com","purpose":"Trade-in, appraisal, acquisition and valuation intent","priority":3},
+  {"domain":"nissandeals.org","state":"BUILD","archetype":"offer_campaign","canonical":"https://nissandeals.org","purpose":"Offers, incentives, buying opportunity and campaign discovery","priority":4},
+  {"domain":"oneilnissan.ai","state":"KEEP_RUNTIME","archetype":"tenant_runtime","canonical":"https://oneilnissan.ai","purpose":"Tenant 001 operating/runtime surface","priority":1},
+  {"domain":"arpai.ai","state":"REDIRECT","archetype":"redirect","canonical":"https://arpai.co","purpose":"Defensive brand domain","priority":5},
+  {"domain":"arpai.net","state":"REDIRECT","archetype":"redirect","canonical":"https://arpai.co","purpose":"Defensive brand domain","priority":5},
+  {"domain":"arpai.info","state":"REDIRECT","archetype":"redirect","canonical":"https://arpai.co","purpose":"Defensive brand domain","priority":5},
+  {"domain":"arpai.xyz","state":"REDIRECT","archetype":"redirect","canonical":"https://arpai.co","purpose":"Defensive brand domain","priority":5},
+  {"domain":"arpai.store","state":"HOLD","archetype":"campaign_utility","canonical":null,"purpose":"Potential commerce/campaign property","priority":6},
+  {"domain":"nissanplus.com","state":"HOLD","archetype":"lifecycle_membership","canonical":null,"purpose":"Potential ownership, loyalty, premium or lifecycle layer","priority":6},
+  {"domain":"nissanpro.com","state":"HOLD","archetype":"b2b_professional","canonical":null,"purpose":"Potential commercial/fleet/professional Nissan property","priority":6},
+  {"domain":"nissanautosales.com","state":"HOLD","archetype":"transactional_leadgen","canonical":null,"purpose":"Potential broad Nissan shopping/inventory property","priority":6},
+  {"domain":"nissandeal.org","state":"HOLD","archetype":"offer_campaign","canonical":null,"purpose":"Potential campaign or redirect asset","priority":7},
+  {"domain":"nissan-ss.com","state":"HOLD","archetype":"campaign_utility","canonical":null,"purpose":"Undeclared Nissan campaign/utility asset","priority":7},
+  {"domain":"skillsai.net","state":"HOLD","archetype":"future_brand","canonical":null,"purpose":"Future SkillsAI brand; positioning not yet frozen","priority":8},
+  {"domain":"skillsai.info","state":"HOLD","archetype":"future_brand","canonical":null,"purpose":"Future SkillsAI defensive/secondary property","priority":8},
+  {"domain":"skillsai.xyz","state":"HOLD","archetype":"future_brand","canonical":null,"purpose":"Future SkillsAI defensive/secondary property","priority":8},
+  {"domain":"skillsai.store","state":"HOLD","archetype":"future_brand","canonical":null,"purpose":"Future SkillsAI commerce property","priority":8}
+]

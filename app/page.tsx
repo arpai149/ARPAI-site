@@ -1,142 +1,100 @@
-const platformAreas = [
-  {
-    label: 'Customer Operations',
-    title: 'AI-assisted customer workflows',
-    text: 'Route shopper, service, finance, and follow-up requests into clear next actions with human review where it matters.'
-  },
-  {
-    label: 'Business Systems',
-    title: 'Connected operating data',
-    text: 'Bring inventory, leads, appointments, tasks, and evidence into one governed layer that teams can trust.'
-  },
-  {
-    label: 'Governance',
-    title: 'Accountable automation',
-    text: 'Use approval paths, audit trails, permissions, and source-backed responses so automation stays useful and supervised.'
-  }
+import { headers } from 'next/headers';
+import { resolveSite, type SiteConfig } from '../lib/site-config';
+
+const arpaiProducts = [
+  ['Operate', 'DealerOS', 'Run leads, customers, tasks, recovery, communications, handoffs and management workflows from one operating layer.'],
+  ['Decide', 'Decision Studio', 'Help customers understand products, pricing, trade, finance and next steps through a transparent decision journey.'],
+  ['Create', 'Creative Studio', 'Turn live business truth into campaign-ready content, media and customer communications.'],
+  ['Retain', 'ARPAI Passport', 'Carry the customer relationship into ownership, service, retention and the next purchase.']
 ];
 
-const operatingPrinciples = [
-  'Truthful answers over inflated claims',
-  'Human authority over autonomous decisions',
-  'Customer clarity over pressure',
-  'Measurable outcomes over demos',
-  'Secure tenant data boundaries'
-];
+const nissanModels = ['Rogue', 'Pathfinder', 'Murano', 'Kicks', 'Frontier', 'Armada', 'Sentra', 'LEAF'];
 
-const productLines = [
-  'Dealer AI websites and guided shopping',
-  'Inventory and offer decision support',
-  'Lead, appointment, and follow-up orchestration',
-  'Manager review, approvals, and evidence trails',
-  'Executive visibility into AI-assisted operations'
-];
-
-export default function Page() {
+function Shell({ site, children }: { site: SiteConfig; children: React.ReactNode }) {
   return (
-    <main>
-      <section className="hero">
-        <div className="hero-media" aria-hidden="true">
-          <div className="signal-panel">
-            <span />
-            <span />
-            <span />
-            <span />
+    <main className={`site site-${site.key} accent-${site.accent}`}>
+      <nav className="topnav">
+        <div className="container nav-inner">
+          <a className="wordmark" href="#top">{site.brand}</a>
+          <div className="nav-links">
+            <a href="#system">Explore</a>
+            <a href="#proof">Proof</a>
+            <a className="nav-cta" href="#next">{site.primaryCta}</a>
           </div>
         </div>
-        <div className="container hero-layout">
-          <div className="hero-copy-wrap">
-            <p className="eyebrow">ARPAI ONE</p>
-            <h1>AI workforce systems for businesses that need trust at scale.</h1>
-            <p className="hero-copy">
-              ARPAI builds governed AI operations for teams that depend on accurate data, accountable workflows, and
-              human oversight. Our platform helps companies turn customer intent, operational records, and team action
-              into one connected system.
-            </p>
-            <div className="actions" aria-label="Primary actions">
-              <a className="btn primary" href="mailto:hello@arpai.co">Talk to ARPAI</a>
-              <a className="btn secondary" href="https://oneilnissan.ai">View dealership experience</a>
-            </div>
-          </div>
-          <aside className="proof-panel" aria-label="ARPAI platform focus">
-            <span>Platform focus</span>
-            <strong>Governed AI operations</strong>
-            <p>
-              Built for real businesses where data quality, approvals, customer experience, and operational follow-through
-              have to work together.
-            </p>
-          </aside>
+      </nav>
+      {children}
+      <footer>
+        <div className="container footer-grid">
+          <div><strong>{site.brand}</strong><p>{site.eyebrow}</p></div>
+          <p>Built on the ARPAI governed web system.</p>
         </div>
-      </section>
-
-      <section className="container section">
-        <div className="section-head">
-          <p className="eyebrow">What We Build</p>
-          <h2>One operating layer for AI-assisted work.</h2>
-          <p>
-            ARPAI ONE connects the public customer experience with the internal work required to answer accurately,
-            follow up responsibly, and keep teams aligned.
-          </p>
-        </div>
-        <div className="card-grid">
-          {platformAreas.map((area) => (
-            <article className="card" key={area.label}>
-              <span className="eyebrow compact">{area.label}</span>
-              <h3>{area.title}</h3>
-              <p>{area.text}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="band">
-        <div className="container split">
-          <div>
-            <p className="eyebrow">Automotive First</p>
-            <h2>Built in the dealership environment, useful beyond it.</h2>
-          </div>
-          <div className="copy-block">
-            <p>
-              Automotive retail is a demanding testbed: live inventory, financing paths, appointment timing, trade-ins,
-              compliance-sensitive conversations, and fast human handoffs. ARPAI uses that environment to build systems
-              that can support any business with complex customer operations.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="container section">
-        <div className="two-column">
-          <div className="panel">
-            <p className="eyebrow">Platform Capabilities</p>
-            <h2>From customer intent to team action.</h2>
-            <ul className="check-list">
-              {productLines.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="panel muted-panel">
-            <p className="eyebrow">Operating Principles</p>
-            <h2>Automation that stays accountable.</h2>
-            <ul className="check-list">
-              {operatingPrinciples.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className="container section final-cta">
-        <p className="eyebrow">ARPAI ONE</p>
-        <h2>Deploy AI where the work actually happens.</h2>
-        <p>
-          We help businesses move from scattered tools and one-off AI experiments into a governed operating system for
-          customer and team workflows.
-        </p>
-        <a className="btn primary" href="mailto:hello@arpai.co">Start a conversation</a>
-      </section>
+      </footer>
     </main>
   );
+}
+
+function Hero({ site }: { site: SiteConfig }) {
+  return (
+    <section id="top" className="factory-hero">
+      <div className="container hero-grid">
+        <div>
+          <p className="eyebrow">{site.eyebrow}</p>
+          <h1>{site.title}</h1>
+          <p className="hero-copy">{site.description}</p>
+          <div className="actions">
+            <a className="btn primary" href="#next">{site.primaryCta}</a>
+            {site.secondaryCta && <a className="btn secondary" href="#system">{site.secondaryCta}</a>}
+          </div>
+        </div>
+        <aside className="hero-proof">
+          <span>ARPAI Site Factory</span>
+          <strong>One design system. One governance layer. Multiple controlled properties.</strong>
+          <p>Each domain keeps a clear audience and job while sharing the same production discipline underneath.</p>
+        </aside>
+      </div>
+    </section>
+  );
+}
+
+function Arpai() {
+  return (
+    <>
+      <section id="system" className="container section">
+        <div className="section-head"><p className="eyebrow">ARPAI ONE</p><h2>Four surfaces. One operating system.</h2><p>Different interfaces into the same governed business context.</p></div>
+        <div className="factory-grid four">{arpaiProducts.map(([k,t,d]) => <article className="factory-card" key={t}><span>{k}</span><h3>{t}</h3><p>{d}</p></article>)}</div>
+      </section>
+      <section className="dark-band"><div className="container band-grid"><div><p className="eyebrow">How it works</p><h2>The advantage is not another chatbot.</h2></div><div><p>ARPAI sits between systems of record, people doing the work and AI assisting them. It resolves context, identifies the next action, executes permitted work and routes material decisions to accountable humans.</p><p><strong>Design principle:</strong> no new system unless it creates material value.</p></div></div></section>
+      <section id="proof" className="container section"><div className="section-head"><p className="eyebrow">Tenant model</p><h2>Built once. Operated by tenant.</h2></div><div className="factory-grid three"><article className="factory-card"><span>Parent</span><h3>ARPAI ONE</h3><p>Shared intelligence, governance and reusable product capabilities.</p></article><article className="factory-card"><span>Tenant 001</span><h3>O’Neil Nissan</h3><p>Real-world automotive proving ground running separately at oneilnissan.ai.</p></article><article className="factory-card"><span>Governance</span><h3>Human authority stays visible.</h3><p>Evidence, ownership, tenant boundaries and approval gates are part of the product.</p></article></div></section>
+    </>
+  );
+}
+
+function NissanReviews() {
+  return (
+    <>
+      <section id="system" className="container section"><div className="section-head"><p className="eyebrow">Model research</p><h2>Start with the Nissan you’re considering.</h2><p>Reviews, trims, owner experience, comparisons and practical buying guidance.</p></div><div className="factory-grid four">{nissanModels.map((m) => <article className="factory-card model-card" key={m}><span>Model hub</span><h3>{m}</h3><p>Expert review · trims · owner reviews · comparisons · FAQs</p></article>)}</div></section>
+      <section className="dark-band"><div className="container band-grid"><div><p className="eyebrow">Community</p><h2>What ownership actually feels like.</h2></div><div><p>Structured owner reviews preserve model year, trim, mileage, ownership period and whether the owner would buy again.</p><p>No fabricated ratings. No fake community activity.</p></div></div></section>
+      <section id="proof" className="container section"><div className="factory-grid three"><article className="factory-card"><span>Review</span><h3>Expert + owner views</h3><p>Manufacturer facts, editorial judgment and owner experience remain clearly separated.</p></article><article className="factory-card"><span>Compare</span><h3>Decision-first comparisons</h3><p>Who wins where, by buyer type and real use case.</p></article><article className="factory-card"><span>Community</span><h3>Long-term intelligence</h3><p>10,000-mile check-ins, family tests, real MPG/range and “Would You Buy It Again?”</p></article></div></section>
+    </>
+  );
+}
+
+function NissanTrades() {
+  return (
+    <><section id="system" className="container section"><div className="section-head"><p className="eyebrow">Trade path</p><h2>Value → verify → choose.</h2><p>A high-intent property built to reduce friction without hiding how the decision works.</p></div><div className="factory-grid three"><article className="factory-card"><span>01</span><h3>Value</h3><p>Capture VIN, mileage, condition and market context.</p></article><article className="factory-card"><span>02</span><h3>Verify</h3><p>Resolve payoff, condition and evidence before presenting next steps.</p></article><article className="factory-card"><span>03</span><h3>Act</h3><p>Trade, sell or keep — with a clean handoff when human review is needed.</p></article></div></section><section id="proof" className="dark-band"><div className="container band-grid"><div><p className="eyebrow">Production rule</p><h2>Valuation writes belong in the runtime.</h2></div><div><p>The public property handles education and intent. Sensitive customer data, valuation state and dealer workflows converge into the authenticated ARPAI/Vercel stack.</p></div></div></section></>
+  );
+}
+
+function NissanDeals() {
+  return (
+    <><section id="system" className="container section"><div className="section-head"><p className="eyebrow">Offer intelligence</p><h2>Finance. Lease. Cash. Context.</h2><p>Offers should be understandable before they are persuasive.</p></div><div className="factory-grid three"><article className="factory-card"><span>APR</span><h3>Finance offers</h3><p>Rate, term, model eligibility and tradeoffs shown together.</p></article><article className="factory-card"><span>Lease</span><h3>Lease offers</h3><p>Payment, due at signing, mileage and assumptions visible.</p></article><article className="factory-card"><span>Cash</span><h3>Rebate offers</h3><p>Eligibility and combinability disclosed instead of buried.</p></article></div></section><section id="proof" className="dark-band"><div className="container band-grid"><div><p className="eyebrow">Trust layer</p><h2>No mystery math.</h2></div><div><p>Campaign pages can move quickly in the Site Factory, while live incentive data and materially binding calculations graduate into governed runtime services.</p></div></div></section></>
+  );
+}
+
+export default async function Page({ searchParams }: { searchParams: Promise<{ site?: string }> }) {
+  const h = await headers();
+  const params = await searchParams;
+  const site = resolveSite(h.get('host'), params.site);
+  return <Shell site={site}><Hero site={site}/>{site.key === 'arpai' ? <Arpai/> : site.key === 'nissanreviews' ? <NissanReviews/> : site.key === 'nissantrades' ? <NissanTrades/> : <NissanDeals/>}<section id="next" className="container section final-cta"><p className="eyebrow">Next action</p><h2>{site.primaryCta}</h2><p>Start with one clear intent, preserve the evidence, and route deeper workflow complexity into the canonical ARPAI runtime only when needed.</p><a className="btn primary" href="mailto:hello@arpai.co">{site.primaryCta}</a></section></Shell>;
 }

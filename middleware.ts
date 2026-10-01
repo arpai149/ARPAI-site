@@ -10,9 +10,12 @@ export function middleware(request: NextRequest) {
     url.host = 'arpai.co';
     return NextResponse.redirect(url, 308);
   }
-  return NextResponse.next();
+  const response = NextResponse.next();
+  if (!['arpai.co','www.arpai.co'].includes(host) || request.nextUrl.searchParams.has('site')) response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  return response;
 }
 
 export const config = {
   matcher: '/((?!_next/static|_next/image|favicon.ico).*)'
 };
+

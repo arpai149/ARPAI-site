@@ -1,5 +1,6 @@
 {
   "framework": "nextjs",
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "ignoreCommand": "if [ \"$VERCEL_PROJECT_ID\" = \"prj_pZFaZiDzRyyVoAdUea2rEzJDS6az\" ]; then exit 1; else echo 'Ignoring deployment: ARPAI corporate canonical project only.'; exit 0; fi"
 }

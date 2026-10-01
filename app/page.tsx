@@ -2,10 +2,10 @@ import { headers } from 'next/headers';
 import { resolveSite, type SiteConfig } from '../lib/site-config';
 
 const arpaiProducts = [
-  ['Operate', 'DealerOS', 'Run leads, customers, tasks, recovery, communications, handoffs and management workflows from one operating layer.'],
-  ['Decide', 'Decision Studio', 'Help customers understand products, pricing, trade, finance and next steps through a transparent decision journey.'],
-  ['Create', 'Creative Studio', 'Turn live business truth into campaign-ready content, media and customer communications.'],
-  ['Retain', 'ARPAI Passport', 'Carry the customer relationship into ownership, service, retention and the next purchase.']
+  ['Controlled release', 'DealerAI', 'The staff workspace for reviewed operator actions and agent activity. Individual access awaits approved administrator setup and recovery verification.'],
+  ['Public shopping', 'oneilnissan.ai', 'Browse observed dealership inventory and explore buying assumptions. A listing or estimate is not confirmed availability, a final quote or finance approval.'],
+  ['Shared foundation', 'ARPAI ONE', 'Tenant identity, audited operator decisions and internal AI job controls in the existing platform. CRM delivery remains staged pending vendor approval.'],
+  ['Planned expansion', 'Trade, research and ownership', 'Shared campaigns and department workflows are planned. Creative production, appraisal automation and ownership services are not generally available.']
 ];
 
 const nissanModels = ['Rogue', 'Pathfinder', 'Murano', 'Kicks', 'Frontier', 'Armada', 'Sentra', 'LEAF'];
@@ -18,7 +18,7 @@ function Shell({ site, children }: { site: SiteConfig; children: React.ReactNode
           <a className="wordmark" href="#top">{site.brand}</a>
           <div className="nav-links">
             <a href="#system">Explore</a>
-            <a href="#proof">Proof</a>
+            <a href="#proof">Status</a>
             <a className="nav-cta" href="#next">{site.primaryCta}</a>
           </div>
         </div>
@@ -48,9 +48,9 @@ function Hero({ site }: { site: SiteConfig }) {
           </div>
         </div>
         <aside className="hero-proof">
-          <span>ARPAI Site Factory</span>
-          <strong>One design system. One governance layer. Multiple controlled properties.</strong>
-          <p>Each domain keeps a clear audience and job while sharing the same production discipline underneath.</p>
+          <span>Shared operating model</span>
+          <strong>One platform. Clear responsibility. Evidence before expansion.</strong>
+          <p>ARPAI ONE is the parent platform, DealerAI is the staff workspace, and oneilnissan.ai is the customer shopping experience.</p>
         </aside>
       </div>
     </section>
@@ -61,11 +61,11 @@ function Arpai() {
   return (
     <>
       <section id="system" className="container section">
-        <div className="section-head"><p className="eyebrow">ARPAI ONE</p><h2>Four surfaces. One operating system.</h2><p>Different interfaces into the same governed business context.</p></div>
+        <div className="section-head"><p className="eyebrow">ARPAI ONE</p><h2>One program, released in stages.</h2><p>Current scope is stated below. Planned capabilities are not presented as completed services.</p></div>
         <div className="factory-grid four">{arpaiProducts.map(([k,t,d]) => <article className="factory-card" key={t}><span>{k}</span><h3>{t}</h3><p>{d}</p></article>)}</div>
       </section>
-      <section className="dark-band"><div className="container band-grid"><div><p className="eyebrow">How it works</p><h2>The advantage is not another chatbot.</h2></div><div><p>ARPAI sits between systems of record, people doing the work and AI assisting them. It resolves context, identifies the next action, executes permitted work and routes material decisions to accountable humans.</p><p><strong>Design principle:</strong> no new system unless it creates material value.</p></div></div></section>
-      <section id="proof" className="container section"><div className="section-head"><p className="eyebrow">Tenant model</p><h2>Built once. Operated by tenant.</h2></div><div className="factory-grid three"><article className="factory-card"><span>Parent</span><h3>ARPAI ONE</h3><p>Shared intelligence, governance and reusable product capabilities.</p></article><article className="factory-card"><span>Tenant 001</span><h3>O’Neil Nissan</h3><p>Real-world automotive proving ground running separately at oneilnissan.ai.</p></article><article className="factory-card"><span>Governance</span><h3>Human authority stays visible.</h3><p>Evidence, ownership, tenant boundaries and approval gates are part of the product.</p></article></div></section>
+      <section className="dark-band"><div className="container band-grid"><div><p className="eyebrow">How it works</p><h2>Keep the dealership in control.</h2></div><div><p>CRM, DMS and approved dealer systems remain authoritative. ARPAI coordinates context and reviewed work around them. Customer messages, price changes, financing commitments and publishing require the appropriate human authority.</p><p><strong>Design principle:</strong> no new system unless it creates material value.</p></div></div></section>
+      <section id="proof" className="container section"><div className="section-head"><p className="eyebrow">Release status · September 30, 2026</p><h2>What is available now.</h2><p>Implementation evidence and operational acceptance are different milestones.</p></div><div className="factory-grid three"><article className="factory-card"><span>Public</span><h3>O’Neil Nissan shopping</h3><p>Observed inventory, vehicle pages and decision guidance are live at <a href="https://oneilnissan.ai">oneilnissan.ai</a>. The dealership’s primary website remains <a href="https://oneilnissan.com">oneilnissan.com</a>.</p></article><article className="factory-card"><span>Controlled activation</span><h3>Staff and AI operations</h3><p>Individual login, MFA, audit and agent controls are implemented. Staff activation, the complete hosted shopper handoff and verified CRM delivery remain acceptance steps.</p></article><article className="factory-card"><span>Human authority</span><h3>Trust requires evidence</h3><p>Internal AI work produces proposals for review. No general authority to send messages, change prices or publish follows from an agent name or an account login. No revenue or performance guarantee is claimed.</p></article></div></section>
     </>
   );
 }
@@ -96,5 +96,6 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ s
   const h = await headers();
   const params = await searchParams;
   const site = resolveSite(h.get('host'), params.site);
-  return <Shell site={site}><Hero site={site}/>{site.key === 'arpai' ? <Arpai/> : site.key === 'nissanreviews' ? <NissanReviews/> : site.key === 'nissantrades' ? <NissanTrades/> : <NissanDeals/>}<section id="next" className="container section final-cta"><p className="eyebrow">Next action</p><h2>{site.primaryCta}</h2><p>Start with one clear intent, preserve the evidence, and route deeper workflow complexity into the canonical ARPAI runtime only when needed.</p><a className="btn primary" href="mailto:hello@arpai.co">{site.primaryCta}</a></section></Shell>;
+  return <Shell site={site}><Hero site={site}/>{site.key !== 'arpai' && <section className="container preview-notice" role="status"><strong>Campaign preview — not an active service.</strong><p>These are proposed content structures. Reviews, valuations, offers and community participation are not available here. No customer data is collected by this preview.</p></section>}{site.key === 'arpai' ? <Arpai/> : site.key === 'nissanreviews' ? <NissanReviews/> : site.key === 'nissantrades' ? <NissanTrades/> : <NissanDeals/>}<section id="next" className="container section final-cta"><p className="eyebrow">Next action</p><h2>{site.primaryCta}</h2><p>Discuss a focused dealership workflow and the evidence needed to operate it. This link opens your email app; it does not book an appointment or confirm service availability.</p><a className="btn primary" href="mailto:hello@arpai.co">Email ARPAI</a></section></Shell>;
 }
+

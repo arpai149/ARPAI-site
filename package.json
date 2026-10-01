@@ -4,12 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --no-lint",
+    "build": "npm run test:boundary && npm run check && next build",
     "start": "next start",
-    "check": "tsc --noEmit --project tsconfig.json"
+    "check": "tsc --noEmit --project tsconfig.json",
+    "test:boundary": "node scripts/test-site-boundary.cjs"
   },
   "dependencies": {
-    "next": "15.3.8",
+    "next": "15.5.27",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },
@@ -18,5 +19,11 @@
     "@types/react": "19.0.12",
     "@types/react-dom": "19.0.5",
     "typescript": "5.8.3"
+  },
+  "overrides": {
+    "postcss": "8.5.28"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

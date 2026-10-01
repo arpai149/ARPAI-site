@@ -18,8 +18,8 @@ export const sites: Record<SiteKey, SiteConfig> = {
     hostnames: ['arpai.co', 'www.arpai.co'],
     brand: 'ARPAI ONE',
     eyebrow: 'Governed AI operating systems',
-    title: 'AI that actually runs the work.',
-    description: 'ARPAI connects the systems your business already uses, coordinates AI and human teams, and turns fragmented workflows into one accountable operating system.',
+    title: 'Dealership work. Clear ownership.',
+    description: 'ARPAI ONE is being built around dealership systems, accountable staff and governed AI. Public shopping is available today; staff workflows and integrations are being released in controlled stages.',
     primaryCta: 'Request a working session',
     secondaryCta: 'See the operating model',
     accent: 'mint'
@@ -60,7 +60,8 @@ export const sites: Record<SiteKey, SiteConfig> = {
 };
 
 export function resolveSite(hostname?: string | null, override?: string | null): SiteConfig {
-  if (override && override in sites) return sites[override as SiteKey];
+  if ((process.env.VERCEL_ENV === 'preview' || process.env.NODE_ENV === 'development') && override && Object.hasOwn(sites, override)) return sites[override as SiteKey];
   const host = (hostname || '').split(':')[0].toLowerCase();
   return Object.values(sites).find((site) => site.hostnames.includes(host)) || sites.arpai;
 }
+
